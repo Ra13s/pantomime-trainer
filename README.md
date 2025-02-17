@@ -2,7 +2,7 @@
 
 Pantomime Trainer is a simple web-based trainer designed to help users practice and refine their pantomime skills. The application randomly selects and displays actions for users to perform, providing an engaging way to spark creativity and improve expressive movement.  
 
-Access the live app here: https://ra13s.github.io/pantomime-trainer/
+Access the live app here: https://ra13s.github.io/pantomime-trainer?lang=et
 
 ## Table of Contents
 
