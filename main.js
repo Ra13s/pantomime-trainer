@@ -68,40 +68,25 @@ function updateUITranslations() {
   // Update document title
   document.title = uiTranslations[lang].title;
   
-  // Action title
-  document.getElementById("actionTitle").textContent =
-    uiTranslations[lang].actionTitle;
+  // Update section titles and labels
+  document.getElementById("actionTitle").textContent = uiTranslations[lang].actionTitle;
+  document.getElementById("langEnglishLabel").textContent = uiTranslations[lang].languageEnglish;
+  document.getElementById("langEstonianLabel").textContent = uiTranslations[lang].languageEstonian;
+  document.getElementById("nextActionBtn").textContent = uiTranslations[lang].nextAction;
   
-  // Language toggle labels
-  document.getElementById("langEnglishLabel").textContent =
-    uiTranslations[lang].languageEnglish;
-  document.getElementById("langEstonianLabel").textContent =
-    uiTranslations[lang].languageEstonian;
-  
-  // Button text for next action
-  document.getElementById("nextActionBtn").textContent =
-    uiTranslations[lang].nextAction;
-  
-  // Settings toggle
+  // Settings toggle button text based on panel display
   const toggleBtn = document.getElementById("toggle-settings-btn");
   const settingsPanel = document.getElementById("settings-panel");
-  if (settingsPanel.style.display === "block") {
-    toggleBtn.textContent = uiTranslations[lang].hideSettings;
-  } else {
-    toggleBtn.textContent = uiTranslations[lang].showSettings;
-  }
+  toggleBtn.textContent = settingsPanel.style.display === "block"
+    ? uiTranslations[lang].hideSettings
+    : uiTranslations[lang].showSettings;
   
   // Settings panel texts
-  document.getElementById("settingsHeader").textContent =
-    uiTranslations[lang].settingsHeader;
-  document.getElementById("actionIntervalLabel").textContent =
-    uiTranslations[lang].actionInterval;
-  document.getElementById("saveSettingsBtn").textContent =
-    uiTranslations[lang].saveSettings;
-  document.getElementById("displayActionDescLabel").textContent =
-    uiTranslations[lang].displayActionDesc;
-  document.getElementById("displayTitlesLabel").textContent =
-    uiTranslations[lang].displayTitles;
+  document.getElementById("settingsHeader").textContent = uiTranslations[lang].settingsHeader;
+  document.getElementById("actionIntervalLabel").textContent = uiTranslations[lang].actionInterval;
+  document.getElementById("saveSettingsBtn").textContent = uiTranslations[lang].saveSettings;
+  document.getElementById("displayActionDescLabel").textContent = uiTranslations[lang].displayActionDesc;
+  document.getElementById("displayTitlesLabel").textContent = uiTranslations[lang].displayTitles;
 }
 
 /************************************************
@@ -115,9 +100,7 @@ const actionDesc = document.getElementById("actionDesc");
  ************************************************/
 let actionInterval = defaultSettings.actionInterval;
 let actionTimer;
-
-// Current Item
-let currentAction = null;
+let currentAction = null; // Current Action
 
 /************************************************
  * Generate & Display Functions
@@ -128,7 +111,7 @@ function generateAction() {
   const actionsData = (lang === "en")
     ? window.actionsData_en
     : window.actionsData_et;
-    
+  
   if (!actionsData || actionsData.length === 0) return;
   currentAction = getRandomItem(actionsData);
   displayAction();
@@ -145,7 +128,6 @@ function displayAction() {
  ************************************************/
 function shuffleActionAndResetTimer() {
   generateAction();
-  // Reset the timer
   startTimers();
 }
 
@@ -159,8 +141,7 @@ function updateDisplayOptions() {
   
   // Show/hide section titles
   const showTitles = document.getElementById("displayTitles").checked;
-  document.getElementById("actionTitle").style.display =
-    showTitles ? "block" : "none";
+  document.getElementById("actionTitle").style.display = showTitles ? "block" : "none";
 }
 
 /************************************************
@@ -168,9 +149,7 @@ function updateDisplayOptions() {
  ************************************************/
 function startTimers() {
   clearTimers();
-  actionTimer = setInterval(() => {
-    generateAction();
-  }, actionInterval * 1000);
+  actionTimer = setInterval(generateAction, actionInterval * 1000);
 }
 
 function clearTimers() {
@@ -195,8 +174,7 @@ function initSettingsPanel() {
   const aIntervalInput = document.getElementById("actionInterval");
   
   saveBtn.addEventListener("click", () => {
-    actionInterval = parseInt(aIntervalInput.value, 10) ||
-      defaultSettings.actionInterval;
+    actionInterval = parseInt(aIntervalInput.value, 10) || defaultSettings.actionInterval;
     startTimers();
     settingsPanel.style.display = "none";
     isOpen = false;
@@ -204,13 +182,30 @@ function initSettingsPanel() {
 }
 
 /************************************************
+ * URL Parameter Language Setter
+ ************************************************/
+function setLanguageFromUrlParam() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const langParam = urlParams.get('lang');
+  if (langParam && (langParam === 'en' || langParam === 'et')) {
+    const langRadios = document.getElementsByName("lang");
+    for (let radio of langRadios) {
+      radio.checked = (radio.value === langParam);
+    }
+  }
+}
+
+/************************************************
  * Initialization
  ************************************************/
 function init() {
-  // Next Action button now shuffles and resets timer
+  // Set language based on URL parameter if provided
+  setLanguageFromUrlParam();
+  
+  // Next Action button event
   document.getElementById("nextActionBtn").addEventListener("click", shuffleActionAndResetTimer);
   
-  // Language radios now regenerate action immediately on change
+  // Language radios event: update UI on change
   const langRadios = document.getElementsByName("lang");
   for (let radio of langRadios) {
     radio.addEventListener("change", () => {
@@ -219,16 +214,14 @@ function init() {
     });
   }
   
-  // Settings panel
+  // Initialize settings panel and display options
   initSettingsPanel();
-  
-  // Display options
   document.getElementById("displayActionDesc").addEventListener("change", updateDisplayOptions);
   document.getElementById("displayTitles").addEventListener("change", updateDisplayOptions);
   
+  // Initial UI update and timer setup
   updateUITranslations();
   updateDisplayOptions();
-  
   document.getElementById("actionInterval").value = actionInterval;
   document.getElementById("actionIntervalValue").textContent = actionInterval;
   
