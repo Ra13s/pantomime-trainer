@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Pantomime Trainer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1c1c1c;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #display-area {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .display-title {
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+    .display-value {
+      font-size: 2rem;
+      margin: 8px 0 20px;
+      font-weight: bold;
+    }
+    .desc-area {
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    button {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #666;
+    }
+    #lang-toggle {
+      margin: 10px 0;
+      text-align: center;
+    }
+    label {
+      margin: 0 10px;
+    }
+    #toggle-settings-btn {
+      margin: 10px 0;
+    }
+    #settings-panel {
+      display: none;
+      background: #2c2c2c;
+      border: 1px solid #444;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+      max-width: 400px;
+      width: 100%;
+    }
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .settings-row label {
+      margin-right: 10px;
+    }
+    .settings-row input[type="range"] {
+      width: 70%;
+    }
+    .settings-row input[type="checkbox"] {
+      margin-left: 5px;
+    }
+    .settings-row input[type="number"] {
+      padding: 5px;
+      border: 1px solid #555;
+      border-radius: 3px;
+      background: #1c1c1c;
+      color: #f0f0f0;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .settings-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .button-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Display Area -->
+  <div id="display-area">
+    <!-- Action Section -->
+    <div>
+      <div class="display-title" id="actionTitle">Action</div>
+      <div class="display-value" id="actionDisplay">—</div>
+      <div class="desc-area" id="actionDesc"></div>
+    </div>
+  </div>
+
+  <!-- Language Toggle -->
+  <div id="lang-toggle">
+    <label>
+      <input type="radio" name="lang" value="en" />
+      <span id="langEnglishLabel">English</span>
+    </label>
+    <label>
+      <input type="radio" name="lang" value="et" checked />
+      <span id="langEstonianLabel">Estonian</span>
+    </label>
+  </div>
+
+  <!-- Button Group -->
+  <div class="button-group">
+    <button id="nextActionBtn">Next Action</button>
+  </div>
+
+  <!-- Show/Hide Settings -->
+  <button id="toggle-settings-btn">Show Settings</button>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <h2 id="settingsHeader">Settings</h2>
+    <div class="settings-row">
+      <label for="actionInterval" id="actionIntervalLabel">Action Interval (s)</label>
+      <input type="range" id="actionInterval" min="1" max="120" value="60" step="1"
+             oninput="document.getElementById('actionIntervalValue').textContent = this.value">
+      <span id="actionIntervalValue">60</span>
+    </div>
+    <div class="settings-row">
+      <label for="displayActionDesc" id="displayActionDescLabel">Display Action Description</label>
+      <input type="checkbox" id="displayActionDesc" checked />
+    </div>
+    <div class="settings-row">
+      <label for="displayTitles" id="displayTitlesLabel">Display Section Titles</label>
+      <input type="checkbox" id="displayTitles" checked />
+    </div>
+    <button id="saveSettingsBtn">Save Settings</button>
+  </div>
+
+  <!-- Data Scripts -->
+  <script src="actions_en.js"></script>
+  <script src="actions_et.js"></script>
+
+  <!-- Main Script -->
+  <script src="main.js"></script>
+</body>
+</html>
