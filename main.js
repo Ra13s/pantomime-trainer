@@ -25,7 +25,6 @@ const uiTranslations = {
     settingsHeader: "Settings",
     actionInterval: "Action Interval (s)",
     saveSettings: "Save Settings",
-    displayActionDesc: "Display Action Description",
     displayTitles: "Display Section Titles"
   },
   et: {
@@ -39,7 +38,6 @@ const uiTranslations = {
     settingsHeader: "Seaded",
     actionInterval: "Tegevuse intervall (s)",
     saveSettings: "Salvesta seaded",
-    displayActionDesc: "Kuva tegevuse kirjeldus",
     displayTitles: "Kuva sektsioonide pealkirjad"
   }
 };
@@ -85,7 +83,6 @@ function updateUITranslations() {
   document.getElementById("settingsHeader").textContent = uiTranslations[lang].settingsHeader;
   document.getElementById("actionIntervalLabel").textContent = uiTranslations[lang].actionInterval;
   document.getElementById("saveSettingsBtn").textContent = uiTranslations[lang].saveSettings;
-  document.getElementById("displayActionDescLabel").textContent = uiTranslations[lang].displayActionDesc;
   document.getElementById("displayTitlesLabel").textContent = uiTranslations[lang].displayTitles;
 }
 
@@ -135,10 +132,6 @@ function shuffleActionAndResetTimer() {
  * Display Options
  ************************************************/
 function updateDisplayOptions() {
-  // Show/hide action description
-  const showDesc = document.getElementById("displayActionDesc").checked;
-  actionDesc.style.display = showDesc ? "block" : "none";
-  
   // Show/hide section titles
   const showTitles = document.getElementById("displayTitles").checked;
   document.getElementById("actionTitle").style.display = showTitles ? "block" : "none";
@@ -216,7 +209,6 @@ function init() {
   
   // Initialize settings panel and display options
   initSettingsPanel();
-  document.getElementById("displayActionDesc").addEventListener("change", updateDisplayOptions);
   document.getElementById("displayTitles").addEventListener("change", updateDisplayOptions);
   
   // Initial UI update and timer setup
