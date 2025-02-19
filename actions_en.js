@@ -349,7 +349,6 @@ window.actionsData_en = [
     "Rushing and fumbling for keys in your pocket",
     "Scrambling to catch something falling",
     "Overreacting to a spilled drink by dramatically wiping your shirt",
-    "Miming a tight grip on a wonky shopping cart wheel",
     "Fumbling with a jammed zipper in public",
     "Stumbling and then regaining your balance with a shocked expression",
     "Exaggeratedly twisting a stuck jar lid",
